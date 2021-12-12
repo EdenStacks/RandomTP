@@ -6,3 +6,6 @@ prefix: RandomTP
 authors: [ NayeOne ]
 description: Minecraft plugin to random teleport player in any worlds !
 website: https://github.com/EdenStacks
+permissions:
+  randomtp.cooldown.bypass:
+    description: Allow player to bypass the cooldown of a random teleportation.

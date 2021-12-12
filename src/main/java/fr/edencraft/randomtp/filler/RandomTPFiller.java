@@ -9,6 +9,7 @@ public class RandomTPFiller implements CFGFiller {
     /* File Configuration preview :
     =======================================
     *language: fr
+    *cooldown: 120
     *worlds:
     *  our_world_name:
     *    border:
@@ -31,6 +32,7 @@ public class RandomTPFiller implements CFGFiller {
     @Override
     public void fill(FileConfiguration fg) {
         fg.set("language", "fr");
+        fg.set("cooldown", 120);
         ConfigurationSection worldsSection = fg.createSection("worlds");
         ConfigurationSection worldSection = worldsSection.createSection("our_world_name");
         ConfigurationSection borderSection = worldSection.createSection("border");

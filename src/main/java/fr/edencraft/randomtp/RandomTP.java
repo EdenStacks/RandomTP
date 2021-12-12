@@ -3,6 +3,7 @@ package fr.edencraft.randomtp;
 import fr.edencraft.randomtp.lang.Language;
 import fr.edencraft.randomtp.manager.CommandManager;
 import fr.edencraft.randomtp.manager.ConfigurationManager;
+import fr.edencraft.randomtp.manager.CooldownManager;
 import fr.edencraft.randomtp.utils.ColoredText;
 import fr.edencraft.randomtp.utils.ConfigurationUtils;
 import org.bukkit.Bukkit;
@@ -17,6 +18,7 @@ public final class RandomTP extends JavaPlugin {
 
     // MANAGERS
     private static ConfigurationManager configurationManager;
+    private static CooldownManager cooldownManager;
 
     // INSTANCE
     private static RandomTP INSTANCE;
@@ -30,6 +32,7 @@ public final class RandomTP extends JavaPlugin {
         configurationManager = new ConfigurationManager(this);
         configurationManager.setupFiles();
 
+        cooldownManager = new CooldownManager();
         new CommandManager(this);
 
         log(Level.INFO, "RandomTP enabled. (took " + (System.currentTimeMillis() - delay) + "ms)");
@@ -54,6 +57,10 @@ public final class RandomTP extends JavaPlugin {
 
     public static ConfigurationManager getConfigurationManager(){
         return configurationManager;
+    }
+
+    public static CooldownManager getCooldownManager() {
+        return cooldownManager;
     }
 
     public static Language getLanguage() {

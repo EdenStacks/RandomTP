@@ -68,4 +68,13 @@ public class ConfigurationUtils {
         };
     }
 
+    /**
+     * This method return the duration of a cooldown specified in the RandomTP configuration file.
+     *
+     * @return The duration of a cooldown.
+     */
+    public static int getCooldownDuration() {
+        return getRandomTPFile().getInt("cooldown");
+    }
+
 }

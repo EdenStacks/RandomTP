@@ -27,4 +27,12 @@ public class English implements Language {
                 "&aRandom teleportation done &8(&7" + safeLocation.getTotalAttempt() + "&8)&a."
         ).treat();
     }
+
+    @Override
+    public String getActiveCooldown(long timeLeft) {
+        return prefix + new ColoredText(
+                "&cYou will be able to random teleport again in &e" + timeLeft / 1000 +
+                        " &csecond(s)."
+        ).treat();
+    }
 }

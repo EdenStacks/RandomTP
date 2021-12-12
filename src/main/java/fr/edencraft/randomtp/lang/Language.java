@@ -16,6 +16,7 @@ public interface Language {
      * @return The message in a specific language.
      */
     String getUnregisteredWorld(World world);
+
     /**
      * This message is called when a random teleportation has been canceled due to the max attempt
      * limit.
@@ -32,5 +33,13 @@ public interface Language {
      * @return The message in a specific language.
      */
     String getSuccessRTP(RandomSafeLocation safeLocation);
+
+    /**
+     * This message is called when a player try to do an action with an active cooldown on it.
+     *
+     * @param timeLeft Time left before next action.
+     * @return The message in a specific language.
+     */
+    String getActiveCooldown(long timeLeft);
 
 }
