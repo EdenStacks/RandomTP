@@ -1,8 +1,10 @@
 package fr.edencraft.randomtp;
 
+import fr.edencraft.randomtp.lang.Language;
 import fr.edencraft.randomtp.manager.CommandManager;
 import fr.edencraft.randomtp.manager.ConfigurationManager;
 import fr.edencraft.randomtp.utils.ColoredText;
+import fr.edencraft.randomtp.utils.ConfigurationUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,7 +13,7 @@ import java.util.logging.Level;
 public final class RandomTP extends JavaPlugin {
 
     // PLUGIN PREFIX
-    private static final String pluginPrefix = new ColoredText("&dEden&eTP &f&l » &r").treat();
+    private static final String pluginPrefix = new ColoredText("&dEden&eTP &f&l» &r").treat();
 
     // MANAGERS
     private static ConfigurationManager configurationManager;
@@ -52,5 +54,9 @@ public final class RandomTP extends JavaPlugin {
 
     public static ConfigurationManager getConfigurationManager(){
         return configurationManager;
+    }
+
+    public static Language getLanguage() {
+        return (Language) ConfigurationUtils.getLanguage();
     }
 }

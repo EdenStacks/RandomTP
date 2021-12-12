@@ -11,17 +11,22 @@ public class RandomSafeLocation {
     private final int maxAttempt = 100;
 
     private Location randomSafeLocation = null;
-    private int lastAttempt = 0;
+    private int totalAttempt = 0;
 
     private boolean found;
     private final List<Material> unsafeBlocks;
     private final Region region;
-    private final Region excludeRegion;
+    private Region excludeRegion;
 
-    public RandomSafeLocation(Region region, List<Material> unsafeBlocks, Region excludeRegion) {
+    public RandomSafeLocation(Region region, List<Material> unsafeBlocks) {
         this.found = false;
         this.unsafeBlocks = unsafeBlocks;
         this.region = region;
+        this.excludeRegion = null;
+    }
+
+    public RandomSafeLocation(Region region, List<Material> unsafeBlocks, Region excludeRegion) {
+        this(region, unsafeBlocks);
         this.excludeRegion = excludeRegion;
     }
 
@@ -72,7 +77,7 @@ public class RandomSafeLocation {
             found = true;
         }
 
-        lastAttempt = attempt;
+        totalAttempt = attempt;
     }
 
     public int getMaxAttempt() {
@@ -83,8 +88,8 @@ public class RandomSafeLocation {
         return randomSafeLocation;
     }
 
-    public int getLastAttempt() {
-        return lastAttempt;
+    public int getTotalAttempt() {
+        return totalAttempt;
     }
 
     public boolean isFound() {
@@ -108,7 +113,7 @@ public class RandomSafeLocation {
         return "RandomSafeLocation{" +
                 "maxAttempt=" + maxAttempt +
                 ", randomSafeLocation=" + randomSafeLocation.toString() +
-                ", lastAttempt=" + lastAttempt +
+                ", lastAttempt=" + totalAttempt +
                 ", found=" + found +
                 ", unsafeBlocks=" + unsafeBlocks +
                 ", region=" + region.toString() +

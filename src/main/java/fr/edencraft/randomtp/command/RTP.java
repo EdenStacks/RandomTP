@@ -8,8 +8,11 @@ import co.aikar.commands.annotation.Subcommand;
 import fr.edencraft.randomtp.RandomTP;
 import fr.edencraft.randomtp.manager.ConfigurationManager;
 import fr.edencraft.randomtp.utils.ColoredText;
+import fr.edencraft.randomtp.utils.TeleportUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.logging.Level;
 
 @CommandAlias("rtp")
 public class RTP extends BaseCommand {
@@ -22,7 +25,8 @@ public class RTP extends BaseCommand {
     @Default
     @CommandPermission(basePermission + ".rtp")
     public static void onRTP(Player player){
-
+        boolean b = TeleportUtils.randomTeleportPlayer(player);
+        if (!b) RandomTP.log(Level.INFO, "Le joueur " + player.getName() + " n'a pas pu être rtp.");
     }
 
     @Subcommand("about")

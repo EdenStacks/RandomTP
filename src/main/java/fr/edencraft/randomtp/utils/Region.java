@@ -84,15 +84,15 @@ public class Region {
     }
 
     public boolean contain(Location location) {
-        return getXMin() <= location.getX() && location.getX() <= getXMax() && getZMin() <= location.getZ()
-            && location.getZ() <= getZMax();
+        return (getXMin() <= location.getX() && location.getX() <= getXMax()) && (getZMin() <= location.getZ()
+            && location.getZ() <= getZMax());
     }
 
     @Override
     public String toString() {
         return "Region{" +
-                "a=" + a.toString() +
-                ", b=" + b.toString() +
+                "a=" + a +
+                ", b=" + b +
                 ", world=" + world.getName() +
                 '}';
     }
