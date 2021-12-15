@@ -1,25 +1,26 @@
 package fr.edencraft.randomtp.command;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.*;
 import fr.edencraft.randomtp.RandomTP;
 import fr.edencraft.randomtp.lang.Language;
+import fr.edencraft.randomtp.manager.ConfigurationManager;
 import fr.edencraft.randomtp.manager.CooldownManager;
 import fr.edencraft.randomtp.utils.ColoredText;
+import fr.edencraft.randomtp.utils.CommandCompletionUtils;
 import fr.edencraft.randomtp.utils.TeleportUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.logging.Level;
 
 @CommandAlias("rtp")
 public class RTP extends BaseCommand {
 
-    private final static Language LANGUAGE = RandomTP.getLanguage();
-    private final static CooldownManager COOLDOWN_MANAGER = RandomTP.getCooldownManager();
+    private final static Language LANGUAGE = RandomTP.getINSTANCE().getLanguage();
+    private final static CooldownManager COOLDOWN_MANAGER = RandomTP.getINSTANCE().getCooldownManager();
+    private final static ConfigurationManager CONFIGURATION_MANAGER = RandomTP.getINSTANCE().getConfigurationManager();
 
     private static final String basePermission = "randomtp.command";
 
@@ -33,9 +34,27 @@ public class RTP extends BaseCommand {
 
         boolean b = TeleportUtils.randomTeleportPlayer(player);
         if (!b) {
-            RandomTP.log(Level.INFO, "Le joueur " + player.getName() + " n'a pas pu être rtp.");
+            RandomTP.getINSTANCE().log(Level.INFO, "Le joueur " + player.getName() + " n'a pas pu être rtp.");
         } else {
             COOLDOWN_MANAGER.addToRegister(player);
+        }
+    }
+
+    @Subcommand("reload|rl")
+    @Syntax("[fileName]")
+    @CommandCompletion("@randomtpreload")
+    @CommandPermission(basePermission + ".reload")
+    public static void onReload(CommandSender sender, @Optional String fileName){
+        if (fileName != null && !fileName.isEmpty()) {
+            if (CONFIGURATION_MANAGER.getConfigurationFile(fileName) != null) {
+                CONFIGURATION_MANAGER.reloadFile(fileName);
+                sender.sendMessage(LANGUAGE.getReloadFiles(Collections.singletonList(fileName)));
+            } else {
+                sender.sendMessage(LANGUAGE.getUnknownConfigFile(fileName));
+            }
+        } else {
+            CONFIGURATION_MANAGER.reloadFiles();
+            sender.sendMessage(LANGUAGE.getReloadFiles(CommandCompletionUtils.getConfigurationFilesName()));
         }
     }
 

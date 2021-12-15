@@ -11,7 +11,7 @@ import java.util.HashSet;
 
 public class TeleportUtils {
 
-    private static final Language lang = RandomTP.getLanguage();
+    private static final Language lang = RandomTP.getINSTANCE().getLanguage();
 
     private static final HashSet<Material> unsafeBlocks = new HashSet<>();
 

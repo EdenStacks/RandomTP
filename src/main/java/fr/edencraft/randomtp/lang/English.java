@@ -4,6 +4,8 @@ import fr.edencraft.randomtp.utils.ColoredText;
 import fr.edencraft.randomtp.utils.RandomSafeLocation;
 import org.bukkit.World;
 
+import java.util.List;
+
 public class English implements Language {
 
     @Override
@@ -33,6 +35,27 @@ public class English implements Language {
         return prefix + new ColoredText(
                 "&cYou will be able to random teleport again in &e" + timeLeft / 1000 +
                         " &csecond(s)."
+        ).treat();
+    }
+
+    @Override
+    public String getReloadFiles(List<String> filesName) {
+        if (filesName.size() == 1) {
+            return prefix + new ColoredText(
+                    "&aThe configuration file &7(&f" + filesName.stream().findFirst().get() + "&7) " +
+                            "&ahas been reloaded !"
+            ).treat();
+        } else {
+            return prefix + new ColoredText(
+                    "&aAll configuration file has been reloaded !"
+            ).treat();
+        }
+    }
+
+    @Override
+    public String getUnknownConfigFile(String name) {
+        return prefix + new ColoredText(
+                "&cThe configuration file &7(&f" + name + "&7) &cdoes'nt exist !"
         ).treat();
     }
 }

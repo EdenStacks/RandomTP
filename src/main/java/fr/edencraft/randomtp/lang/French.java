@@ -4,6 +4,8 @@ import fr.edencraft.randomtp.utils.ColoredText;
 import fr.edencraft.randomtp.utils.RandomSafeLocation;
 import org.bukkit.World;
 
+import java.util.List;
+
 public class French implements Language {
 
     @Override
@@ -33,6 +35,27 @@ public class French implements Language {
         return prefix + new ColoredText(
                 "&cVous pourrez de nouveau vous téléporter aléatoirement dans &e" + timeLeft / 1000 +
                         " &cseconde(s)."
+        ).treat();
+    }
+
+    @Override
+    public String getReloadFiles(List<String> filesName) {
+        if (filesName.size() == 1) {
+            return prefix + new ColoredText(
+                    "&aLe fichier de configuration &7(&f" + filesName.stream().findFirst().get() + "&7) " +
+                            "&aa été reload !"
+            ).treat();
+        } else {
+            return prefix + new ColoredText(
+                    "&aTout les fichiers de configuration ont été reload !"
+            ).treat();
+        }
+    }
+
+    @Override
+    public String getUnknownConfigFile(String name) {
+        return prefix + new ColoredText(
+                "&cLe fichier de configuration &7(&f" + name + "&7) &cn'existe pas !"
         ).treat();
     }
 }

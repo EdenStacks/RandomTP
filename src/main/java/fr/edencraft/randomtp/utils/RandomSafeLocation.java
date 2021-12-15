@@ -8,6 +8,9 @@ import java.util.Random;
 
 public class RandomSafeLocation {
 
+    /**
+     * The max attempt to find a safe location.
+     */
     private final int maxAttempt = 100;
 
     private Location randomSafeLocation = null;
@@ -18,6 +21,12 @@ public class RandomSafeLocation {
     private final Region region;
     private Region excludeRegion;
 
+    /**
+     * Construct RandomSafeLocation using a region and a list of unsafe blocks.
+     *
+     * @param region The region where search a random and safe location.
+     * @param unsafeBlocks The list of unsafe blocks where we can't random teleport.
+     */
     public RandomSafeLocation(Region region, List<Material> unsafeBlocks) {
         this.found = false;
         this.unsafeBlocks = unsafeBlocks;
@@ -25,11 +34,23 @@ public class RandomSafeLocation {
         this.excludeRegion = null;
     }
 
+    /**
+     * Construct RandomSafeLocation using a region, a list of unsafe blocks and an exclude region.
+     *
+     * @param region The region where search a random and safe location.
+     * @param unsafeBlocks The list of unsafe blocks where we can't random teleport.
+     * @param excludeRegion The region where we can't random teleport.
+     */
     public RandomSafeLocation(Region region, List<Material> unsafeBlocks, Region excludeRegion) {
         this(region, unsafeBlocks);
         this.excludeRegion = excludeRegion;
     }
 
+    /**
+     * This method generate a location according with region and the exclude region.
+     *
+     * @return A location inside region and outside of exclude region.
+     */
     private Location generateLocation() {
         Random random = new Random();
 
@@ -59,6 +80,10 @@ public class RandomSafeLocation {
         return new Location(region.getWorld(), x, y, z);
     }
 
+    /**
+     * This method try to find a location safe inside the region and outside of the exclude region.
+     * If no location is found due to max attempt reached, the result of isFound() will be false.
+     */
     public void search() {
         Location loc = generateLocation();
         int attempt = 1;

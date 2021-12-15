@@ -14,11 +14,11 @@ import java.util.logging.Level;
 public final class RandomTP extends JavaPlugin {
 
     // PLUGIN PREFIX
-    private static final String pluginPrefix = new ColoredText("&dEden&eTP &f&l» &r").treat();
+    private final String pluginPrefix = new ColoredText("&dEden&eTP &f&l» &r").treat();
 
     // MANAGERS
-    private static ConfigurationManager configurationManager;
-    private static CooldownManager cooldownManager;
+    private ConfigurationManager configurationManager;
+    private CooldownManager cooldownManager;
 
     // INSTANCE
     private static RandomTP INSTANCE;
@@ -43,7 +43,7 @@ public final class RandomTP extends JavaPlugin {
         configurationManager.saveFiles();
     }
 
-    public static void log(Level level, String message) {
+    public void log(Level level, String message) {
         Bukkit.getLogger().log(level, "[" + getPlugin(RandomTP.class).getName() + "] " + message);
     }
 
@@ -51,19 +51,19 @@ public final class RandomTP extends JavaPlugin {
         return INSTANCE;
     }
 
-    public static String getPrefix(){
+    public String getPrefix(){
         return pluginPrefix;
     }
 
-    public static ConfigurationManager getConfigurationManager(){
+    public ConfigurationManager getConfigurationManager(){
         return configurationManager;
     }
 
-    public static CooldownManager getCooldownManager() {
+    public CooldownManager getCooldownManager() {
         return cooldownManager;
     }
 
-    public static Language getLanguage() {
+    public Language getLanguage() {
         return (Language) ConfigurationUtils.getLanguage();
     }
 }

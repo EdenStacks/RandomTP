@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ConfigurationUtils {
 
-    private static final ConfigurationManager cm = RandomTP.getConfigurationManager();
+    private static final ConfigurationManager cm = RandomTP.getINSTANCE().getConfigurationManager();
 
     /**
      * This method will check if the checked world has been registered as an

@@ -14,6 +14,9 @@ public class CooldownManager {
 
     private final HashMap<Player, Long> register;
 
+    /**
+     * Call this constructor to init this manager.
+     */
     public CooldownManager() {
         this.register = new HashMap<>();
     }
