@@ -8,6 +8,7 @@ import fr.edencraft.randomtp.manager.ConfigurationManager;
 import fr.edencraft.randomtp.manager.CooldownManager;
 import fr.edencraft.randomtp.utils.ColoredText;
 import fr.edencraft.randomtp.utils.CommandCompletionUtils;
+import fr.edencraft.randomtp.utils.Countdown;
 import fr.edencraft.randomtp.utils.TeleportUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,12 +33,20 @@ public class RTP extends BaseCommand {
             return;
         }
 
-        boolean b = TeleportUtils.randomTeleportPlayer(player);
-        if (!b) {
-            RandomTP.getINSTANCE().log(Level.INFO, "Le joueur " + player.getName() + " n'a pas pu être rtp.");
-        } else {
-            COOLDOWN_MANAGER.addToRegister(player);
-        }
+        Countdown countdown = new Countdown(RandomTP.getINSTANCE(), 3, player) {
+            @Override
+            public void action() {
+                boolean b = TeleportUtils.randomTeleportPlayer(player);
+                if (!b) {
+                    RandomTP.getINSTANCE().log(
+                            Level.INFO, "Le joueur " + player.getName() + " n'a pas pu être rtp."
+                    );
+                } else {
+                    if (!isCancelled()) COOLDOWN_MANAGER.addToRegister(player);
+                }
+            }
+        };
+        countdown.start();
     }
 
     @Subcommand("reload|rl")
