@@ -45,6 +45,22 @@ public class RTP extends BaseCommand {
                     if (!isCancelled()) COOLDOWN_MANAGER.addToRegister(player);
                 }
             }
+
+            @Override
+            public void eachSecond() {
+                ActionBar ab = new ActionBar(new ColoredText(
+                        LANGUAGE.getTeleportationCountdownTimeLeft(super.getTimeLeft())
+                ).treat());
+                ab.sendToPlayer(player);
+            }
+
+            @Override
+            public void onCancel() {
+                ActionBar ab = new ActionBar(new ColoredText(
+                        LANGUAGE.getTeleportationCountdownCancelled()
+                ).treat());
+                ab.sendToPlayer(player);
+            }
         };
         countdown.start();
     }

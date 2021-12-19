@@ -58,4 +58,18 @@ public class English implements Language {
                 "&cThe configuration file &7(&f" + name + "&7) &cdoes'nt exist !"
         ).treat();
     }
+
+    @Override
+    public String getTeleportationCountdownTimeLeft(int timeLeft) {
+        return prefix + new ColoredText(
+                "&7Teleportation in &e" + timeLeft + " &7second(s)."
+        ).treat();
+    }
+
+    @Override
+    public String getTeleportationCountdownCancelled() {
+        return prefix + new ColoredText(
+                "&7Teleporation cancelled !"
+        ).treat();
+    }
 }

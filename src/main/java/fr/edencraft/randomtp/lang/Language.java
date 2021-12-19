@@ -60,4 +60,19 @@ public interface Language {
      */
     String getUnknownConfigFile(String name);
 
+    /**
+     * This message is called each second of a teleportation cooldown.
+     *
+     * @param timeLeft The time left of the countdown.
+     * @return The message in a specific language.
+     */
+    String getTeleportationCountdownTimeLeft(int timeLeft);
+
+    /**
+     * This message is called when a teleportation countdown is cancelled.
+     *
+     * @return The message in a specific language.
+     */
+    String getTeleportationCountdownCancelled();
+
 }

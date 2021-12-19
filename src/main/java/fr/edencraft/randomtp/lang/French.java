@@ -58,4 +58,18 @@ public class French implements Language {
                 "&cLe fichier de configuration &7(&f" + name + "&7) &cn'existe pas !"
         ).treat();
     }
+
+    @Override
+    public String getTeleportationCountdownTimeLeft(int timeLeft) {
+        return prefix + new ColoredText(
+                "&7Téléportation dans &e" + timeLeft + " &7seconde(s)."
+        ).treat();
+    }
+
+    @Override
+    public String getTeleportationCountdownCancelled() {
+        return prefix + new ColoredText(
+                "&7Téléportation annulée !"
+        ).treat();
+    }
 }

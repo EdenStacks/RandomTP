@@ -44,10 +44,7 @@ public abstract class Countdown implements Listener {
                 public void run() {
 
                     if (timeLeft != 0) {
-                        ActionBar ab = new ActionBar(new ColoredText(
-                                "&7Téléportation dans &e" + timeLeft + " &7seconde(s)."
-                        ).treat());
-                        ab.sendToPlayer(player);
+                        eachSecond();
                     }
 
                     if (timeLeft == 0) {
@@ -65,14 +62,19 @@ public abstract class Countdown implements Listener {
     private void onPlayerMove(PlayerMoveEvent event) {
         if (!event.hasExplicitlyChangedBlock()) return;
         if (event.getPlayer().getName().equalsIgnoreCase(player.getName()) && bukkitTask != null) {
-            ActionBar ab = new ActionBar(new ColoredText(
-                    "&7Téléportation annulée !"
-            ).treat());
-            ab.sendToPlayer(player);
-            bukkitTask.cancel();
-            bukkitTask = null;
-            isCancelled = true;
+            onCancel();
+            cancel();
         }
+    }
+
+    /**
+     * This method is called to cancel the countdown.
+     * It usually used in the onEvents() method.
+     */
+    public void cancel() {
+        bukkitTask.cancel();
+        bukkitTask = null;
+        isCancelled = true;
     }
 
     /**
@@ -85,9 +87,29 @@ public abstract class Countdown implements Listener {
     }
 
     /**
+     * This method return the time remaining to play the action associated to this countdown.
+     *
+     * @return The time left before the end of the countdown.
+     */
+    public int getTimeLeft() {
+        return timeLeft;
+    }
+
+    /**
      * This method represent what to do at the end of the countdown.
      */
     public abstract void action();
+
+    /**
+     * This method represent what to each second of the countdown.
+     * If getTimeLeft() == 0 this method is replaced by action().
+     */
+    public abstract void eachSecond();
+
+    /**
+     * This method represent what to do when countdown is cancelled.
+     */
+    public abstract void onCancel();
 
     /**
      * An util record to send message in the action bar in minecraft instead of the chat.
