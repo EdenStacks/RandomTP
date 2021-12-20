@@ -61,15 +61,22 @@ public class French implements Language {
 
     @Override
     public String getTeleportationCountdownTimeLeft(int timeLeft) {
-        return prefix + new ColoredText(
+        return new ColoredText(
                 "&7Téléportation dans &e" + timeLeft + " &7seconde(s)."
         ).treat();
     }
 
     @Override
     public String getTeleportationCountdownCancelled() {
-        return prefix + new ColoredText(
+        return new ColoredText(
                 "&7Téléportation annulée !"
+        ).treat();
+    }
+
+    @Override
+    public String getTeleportationCountdownSuccess() {
+        return new ColoredText(
+                "&7Téléportation ..."
         ).treat();
     }
 }

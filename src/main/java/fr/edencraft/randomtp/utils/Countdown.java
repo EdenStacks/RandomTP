@@ -18,14 +18,17 @@ public abstract class Countdown implements Listener {
     private final Player player;
     private final Plugin plugin;
 
-    private BukkitTask bukkitTask = null;
+    private BukkitTask bukkitTask;
     private int timeLeft;
-    private boolean isCancelled = false;
+    private boolean isCancelled;
 
     public Countdown(Plugin plugin, int duration, Player player) {
         this.duration = duration;
         this.player = player;
         this.plugin = plugin;
+
+        this.isCancelled = false;
+        this.bukkitTask = null;
 
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(this, plugin);
@@ -35,33 +38,29 @@ public abstract class Countdown implements Listener {
      * Call this to start countdown.
      */
     public void start() {
-        if (duration == 0) action();
-        else {
-            timeLeft = duration;
+        timeLeft = duration;
 
-            bukkitTask = new BukkitRunnable() {
-                @Override
-                public void run() {
-
-                    if (timeLeft != 0) {
-                        eachSecond();
-                    }
-
-                    if (timeLeft == 0) {
-                        action();
-                        this.cancel();
-                    } else {
-                        timeLeft--;
-                    }
+        bukkitTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (timeLeft != 0) {
+                    eachSecond();
                 }
-            }.runTaskTimer(plugin, 0, 20L);
-        }
+
+                if (timeLeft == 0) {
+                    action();
+                    Countdown.this.cancel();
+                } else {
+                    timeLeft--;
+                }
+            }
+        }.runTaskTimer(plugin, 0, 20L);
     }
 
     @EventHandler
-    private void onPlayerMove(PlayerMoveEvent event) {
+    public void onPlayerMove(PlayerMoveEvent event) {
         if (!event.hasExplicitlyChangedBlock()) return;
-        if (event.getPlayer().getName().equalsIgnoreCase(player.getName()) && bukkitTask != null) {
+        if (event.getPlayer().getName().equalsIgnoreCase(player.getName()) && bukkitTask != null && !isCancelled()) {
             onCancel();
             cancel();
         }
@@ -73,8 +72,8 @@ public abstract class Countdown implements Listener {
      */
     public void cancel() {
         bukkitTask.cancel();
-        bukkitTask = null;
-        isCancelled = true;
+        this.bukkitTask = null;
+        this.isCancelled = true;
     }
 
     /**

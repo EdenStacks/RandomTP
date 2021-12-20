@@ -6,6 +6,7 @@ import fr.edencraft.randomtp.manager.ConfigurationManager;
 import fr.edencraft.randomtp.manager.CooldownManager;
 import fr.edencraft.randomtp.utils.ColoredText;
 import fr.edencraft.randomtp.utils.ConfigurationUtils;
+import me.angeschossen.lands.api.integration.LandsIntegration;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,6 +21,9 @@ public final class RandomTP extends JavaPlugin {
     private ConfigurationManager configurationManager;
     private CooldownManager cooldownManager;
 
+    // API
+    private LandsIntegration landsIntegration;
+
     // INSTANCE
     private static RandomTP INSTANCE;
 
@@ -29,11 +33,13 @@ public final class RandomTP extends JavaPlugin {
 
         INSTANCE = this;
 
-        configurationManager = new ConfigurationManager(this);
-        configurationManager.setupFiles();
+        this.configurationManager = new ConfigurationManager(this);
+        this.configurationManager.setupFiles();
 
-        cooldownManager = new CooldownManager();
+        this.cooldownManager = new CooldownManager();
         new CommandManager(this);
+
+        this.landsIntegration = new LandsIntegration(this);
 
         log(Level.INFO, "RandomTP enabled. (took " + (System.currentTimeMillis() - delay) + "ms)");
     }
@@ -65,5 +71,9 @@ public final class RandomTP extends JavaPlugin {
 
     public Language getLanguage() {
         return (Language) ConfigurationUtils.getLanguage();
+    }
+
+    public LandsIntegration getLandsIntegration() {
+        return landsIntegration;
     }
 }

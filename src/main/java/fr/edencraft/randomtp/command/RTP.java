@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.logging.Level;
 
 @CommandAlias("rtp")
@@ -25,6 +26,8 @@ public class RTP extends BaseCommand {
 
     private static final String basePermission = "randomtp.command";
 
+    private static HashMap<Player, Countdown> playerCountdownHashMap = new HashMap<>();
+
     @Default
     @CommandPermission(basePermission + ".rtp")
     public static void onRTP(Player player){
@@ -33,7 +36,12 @@ public class RTP extends BaseCommand {
             return;
         }
 
-        Countdown countdown = new Countdown(RandomTP.getINSTANCE(), 3, player) {
+        if (playerCountdownHashMap.containsKey(player) && !playerCountdownHashMap.get(player).isCancelled()) {
+            return;
+        }
+
+        int duration = !player.hasPermission("randomtp.countdown.bypass") ? 3 : 0;
+        Countdown countdown = new Countdown(RandomTP.getINSTANCE(), duration, player) {
             @Override
             public void action() {
                 boolean b = TeleportUtils.randomTeleportPlayer(player);
@@ -42,27 +50,29 @@ public class RTP extends BaseCommand {
                             Level.INFO, "Le joueur " + player.getName() + " n'a pas pu être rtp."
                     );
                 } else {
-                    if (!isCancelled()) COOLDOWN_MANAGER.addToRegister(player);
+                    if (!isCancelled()) {
+                        COOLDOWN_MANAGER.addToRegister(player);
+
+                        ActionBar ab = new ActionBar(LANGUAGE.getTeleportationCountdownSuccess());
+                        ab.sendToPlayer(player);
+                    }
                 }
             }
 
             @Override
             public void eachSecond() {
-                ActionBar ab = new ActionBar(new ColoredText(
-                        LANGUAGE.getTeleportationCountdownTimeLeft(super.getTimeLeft())
-                ).treat());
+                ActionBar ab = new ActionBar(LANGUAGE.getTeleportationCountdownTimeLeft(super.getTimeLeft()));
                 ab.sendToPlayer(player);
             }
 
             @Override
             public void onCancel() {
-                ActionBar ab = new ActionBar(new ColoredText(
-                        LANGUAGE.getTeleportationCountdownCancelled()
-                ).treat());
+                ActionBar ab = new ActionBar(LANGUAGE.getTeleportationCountdownCancelled());
                 ab.sendToPlayer(player);
             }
         };
         countdown.start();
+        playerCountdownHashMap.put(player, countdown);
     }
 
     @Subcommand("reload|rl")

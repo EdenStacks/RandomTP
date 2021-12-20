@@ -1,5 +1,7 @@
 package fr.edencraft.randomtp.utils;
 
+import fr.edencraft.randomtp.RandomTP;
+import me.angeschossen.lands.api.integration.LandsIntegration;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
@@ -88,7 +90,8 @@ public class RandomSafeLocation {
         Location loc = generateLocation();
         int attempt = 1;
 
-        while (unsafeBlocks.contains(loc.getWorld().getBlockAt(loc).getType()) && !(attempt == maxAttempt + 1)) {
+        while ((isClaimed(loc) || unsafeBlocks.contains(loc.getWorld().getBlockAt(loc).getType()))
+                && !(attempt == maxAttempt + 1)) {
             loc = generateLocation();
             attempt++;
         }
@@ -131,6 +134,20 @@ public class RandomSafeLocation {
 
     public Region getExcludeRegion() {
         return excludeRegion;
+    }
+
+    /**
+     * This method check if a location is in a claimed area.
+     * If "Lands" isn't installed, it always return false.
+     *
+     * @param location The location to check.
+     * @return If the location is in a claimed area or not.
+     */
+    private boolean isClaimed(Location location) {
+        LandsIntegration landsIntegration = RandomTP.getINSTANCE().getLandsIntegration();
+        if (landsIntegration == null) return false;
+
+        return landsIntegration.isClaimed(location);
     }
 
     @Override

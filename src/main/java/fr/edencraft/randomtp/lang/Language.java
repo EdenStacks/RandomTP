@@ -75,4 +75,11 @@ public interface Language {
      */
     String getTeleportationCountdownCancelled();
 
+    /**
+     * This message is called when a countdown is over and not cancelled.
+     *
+     * @return The message in a specific language.
+     */
+    String getTeleportationCountdownSuccess();
+
 }
