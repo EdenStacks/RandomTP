@@ -1,5 +1,5 @@
 
-# 🌌 RandomTP V1.0 🌌
+# 🌌 RandomTP V1.0.0 🌌
 
 This plugin allows players to be teleported randomly in list of worlds.
 
