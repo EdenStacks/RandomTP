@@ -15,7 +15,7 @@ Tested on paper 1.17.1 with Lands v5.12.1.
 You can change different parameters from RandomTP.yml.
 ```
 # You can per default change this between fr and en.
-langauge: fr
+language: fr
 
 # The cooldown in seconds between each random teleportation.
 # You can set "randomtp.cooldown.bypass" permission to bypass this.
