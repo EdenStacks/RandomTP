@@ -6,7 +6,7 @@
 
     <groupId>fr.edencraft</groupId>
     <artifactId>RandomTP</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>RandomTP</name>
@@ -25,7 +25,8 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <outputDirectory>C:/Users/Nimex/Desktop/Ser/plugins</outputDirectory>
+                    <!--<outputDirectory>C:/Users/Nimex/Desktop/Ser/plugins</outputDirectory>-->
+                    <outputDirectory>/Users/ludovicanselin/Documents/EdenCraft/ServeurDev/1.18.2-RandomTP/plugins</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -83,7 +84,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <version>1.18.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

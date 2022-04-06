@@ -4,6 +4,8 @@ import fr.edencraft.randomtp.utils.CFGFiller;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.Arrays;
+
 public class RandomTPFiller implements CFGFiller {
 
     /* File Configuration preview :
@@ -33,6 +35,7 @@ public class RandomTPFiller implements CFGFiller {
     public void fill(FileConfiguration fg) {
         fg.set("language", "fr");
         fg.set("cooldown", 120);
+        fg.set("unsafe-blocks", Arrays.asList("OAK_LEAVES", "LAVA", "FIRE", "CACTUS", "WATER", "MAGMA_BLOCK"));
         ConfigurationSection worldsSection = fg.createSection("worlds");
         ConfigurationSection worldSection = worldsSection.createSection("our_world_name");
         ConfigurationSection borderSection = worldSection.createSection("border");

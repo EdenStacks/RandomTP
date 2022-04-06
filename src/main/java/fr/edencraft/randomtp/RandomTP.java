@@ -8,8 +8,10 @@ import fr.edencraft.randomtp.utils.ColoredText;
 import fr.edencraft.randomtp.utils.ConfigurationUtils;
 import me.angeschossen.lands.api.integration.LandsIntegration;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 
 public final class RandomTP extends JavaPlugin {
@@ -35,6 +37,7 @@ public final class RandomTP extends JavaPlugin {
 
         this.configurationManager = new ConfigurationManager(this);
         this.configurationManager.setupFiles();
+        updateConfigFiles();
 
         this.cooldownManager = new CooldownManager();
         new CommandManager(this);
@@ -75,5 +78,21 @@ public final class RandomTP extends JavaPlugin {
 
     public LandsIntegration getLandsIntegration() {
         return landsIntegration;
+    }
+
+    /**
+     * @return true if a file as been updated else false.
+     */
+    private boolean updateConfigFiles() {
+        boolean state = false;
+        FileConfiguration randomtpCFG = configurationManager.getConfigurationFile("RandomTP.yml");
+
+        if (!randomtpCFG.contains("unsafe-blocks")) {
+            randomtpCFG.set("unsafe-blocks", Arrays.asList("OAK_LEAVES", "LAVA", "FIRE", "CACTUS", "WATER", "MAGMA_BLOCK"));
+            state = true;
+        }
+
+        configurationManager.saveFiles();
+        return state;
     }
 }

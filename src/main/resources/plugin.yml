@@ -1,7 +1,7 @@
 name: RandomTP
 version: ${project.version}
 main: fr.edencraft.randomtp.RandomTP
-api-version: 1.17
+api-version: 1.18
 prefix: RandomTP
 authors: [ NayeOne ]
 description: Minecraft plugin to random teleport player in any worlds !

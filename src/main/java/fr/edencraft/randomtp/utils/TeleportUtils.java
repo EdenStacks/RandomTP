@@ -2,26 +2,21 @@ package fr.edencraft.randomtp.utils;
 
 import fr.edencraft.randomtp.RandomTP;
 import fr.edencraft.randomtp.lang.Language;
+import fr.edencraft.randomtp.manager.ConfigurationManager;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeleportUtils {
 
     private static final Language lang = RandomTP.getINSTANCE().getLanguage();
 
-    private static final HashSet<Material> unsafeBlocks = new HashSet<>();
-
-    static {
-        unsafeBlocks.add(Material.LAVA);
-        unsafeBlocks.add(Material.FIRE);
-        unsafeBlocks.add(Material.CACTUS);
-        unsafeBlocks.add(Material.WATER);
-        unsafeBlocks.add(Material.MAGMA_BLOCK);
-    }
+    // private static final HashSet<Material> unsafeBlocks = new HashSet<>();
 
     /**
      * Teleport the player to a random and safe location in his world.
@@ -65,7 +60,15 @@ public class TeleportUtils {
             excludeRegion = null;
         }
 
-        RandomSafeLocation safeLocation = new RandomSafeLocation(region, unsafeBlocks.stream().toList(), excludeRegion);
+
+        ConfigurationManager configurationManager = RandomTP.getINSTANCE().getConfigurationManager();
+        FileConfiguration cfg = configurationManager.getConfigurationFile("RandomTP.yml");
+        List<String> unsafeBlocksName = cfg.getStringList("unsafe-blocks");
+        List<Material> unsafeBlocksMaterial = new ArrayList<>();
+
+        unsafeBlocksName.forEach(materialName -> unsafeBlocksMaterial.add(Material.valueOf(materialName)));
+
+        RandomSafeLocation safeLocation = new RandomSafeLocation(region, unsafeBlocksMaterial, excludeRegion);
         safeLocation.search();
 
         if (safeLocation.isFound()) {

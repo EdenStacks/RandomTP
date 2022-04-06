@@ -14,19 +14,17 @@ public class RandomSafeLocation {
      * The max attempt to find a safe location.
      */
     private final int maxAttempt = 100;
-
-    private Location randomSafeLocation = null;
-    private int totalAttempt = 0;
-
-    private boolean found;
     private final List<Material> unsafeBlocks;
     private final Region region;
+    private Location randomSafeLocation = null;
+    private int totalAttempt = 0;
+    private boolean found;
     private Region excludeRegion;
 
     /**
      * Construct RandomSafeLocation using a region and a list of unsafe blocks.
      *
-     * @param region The region where search a random and safe location.
+     * @param region       The region where search a random and safe location.
      * @param unsafeBlocks The list of unsafe blocks where we can't random teleport.
      */
     public RandomSafeLocation(Region region, List<Material> unsafeBlocks) {
@@ -39,8 +37,8 @@ public class RandomSafeLocation {
     /**
      * Construct RandomSafeLocation using a region, a list of unsafe blocks and an exclude region.
      *
-     * @param region The region where search a random and safe location.
-     * @param unsafeBlocks The list of unsafe blocks where we can't random teleport.
+     * @param region        The region where search a random and safe location.
+     * @param unsafeBlocks  The list of unsafe blocks where we can't random teleport.
      * @param excludeRegion The region where we can't random teleport.
      */
     public RandomSafeLocation(Region region, List<Material> unsafeBlocks, Region excludeRegion) {
@@ -69,7 +67,7 @@ public class RandomSafeLocation {
             b = random.nextBoolean();
             if (b) v2 *= -1;
 
-            loc = new Location(region.getWorld(), v1,0, v2);
+            loc = new Location(region.getWorld(), v1, 0, v2);
 
             if (excludeRegion != null && excludeRegion.contain(loc)) loc = null;
         }
@@ -125,7 +123,7 @@ public class RandomSafeLocation {
     }
 
     public List<Material> getUnsafeBlocks() {
-        return unsafeBlocks;
+        return this.unsafeBlocks;
     }
 
     public Region getRegion() {
